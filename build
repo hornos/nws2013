@@ -1,2 +1,2 @@
 #!/bin/bash
-slideshow -t impress.js prezi.text
+slideshow -t impress.js index.text

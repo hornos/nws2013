@@ -55,31 +55,30 @@ Simple Linux Utility for Resource Management
 <div>dr. Hornos Tamás (NIIF)</div>
 
 
-!SLIDE scale=2
+!SLIDE scale=1
 
 SLURM - A világ legjobb nyílt forrású klaszter ütemezője
 
-<img src="slurm_logo_alpha.png" style="width: 20%; height: 20%;">
+<img src="slurm_logo_alpha.png" style="width: 40%; height: 40%;">
 
 
-!SLIDE scale=4
+!SLIDE scale=1
 
-Architektúra 1.
+Architektúra
 
 <img src="arch.gif">
 
 
-!SLIDE scale=8
+!SLIDE scale=1
 
-Architektúra 2.
-
+<p style="background-color: white; padding: 10px;">
 <img src="figure3.gif" style="width: 70%; height: 70%;">
+</p>
 
-
-!SLIDE scale=16
+!SLIDE scale=1
 
 <pre><code>
-SKYNET (0)$ sinfo
+<span style="background: yellow;">SKYNET (0)$ sinfo</span>
 PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
 uv           up 31-00:00:0      1  down* uv2
 devel        up 31-00:00:0      1   idle gpu
@@ -88,7 +87,7 @@ batch*       up 31-00:00:0     21  alloc n[004,009,011-012,014,017-019,023-025,0
 </code></pre>
 
 <pre><code>
-SKYNET (0)$ scontrol show node uv2
+<span style="background: yellow;">SKYNET (0)$ scontrol show node uv2</span>
 NodeName=uv2 Arch=x86_64 CoresPerSocket=6
    CPUAlloc=0 CPUErr=0 CPUTot=48 Features=smp,compute,all
    Gres=gpu:0
@@ -99,10 +98,10 @@ NodeName=uv2 Arch=x86_64 CoresPerSocket=6
 </code></pre>
 
 
-!SLIDE scale=32
+!SLIDE scale=1
 
 <pre><code>
-SKYNET (0)$ squeue 
+<span style="background: yellow;">SKYNET (0)$ squeue</span>
   JOBID PARTITION     NAME     USER  ST       TIME  NODES NODELIST(REASON)
    8386     batch Ni2s-1hs      ***  PD       0:00      8 (Resources)
    8387     batch Ni2s+1hs      ***  PD       0:00      8 (Priority)
@@ -113,10 +112,10 @@ SKYNET (0)$ squeue
 </code></pre>
 
 
-!SLIDE scale=64
+!SLIDE scale=1
 
 <pre><code>
-SKYNET (0)$ scontrol show job 8387
+<span style="background: yellow;">SKYNET (0)$ scontrol show job 8387</span>
 JobId=8387 Name=Ni2s+1hse06
    UserId=***(2018) GroupId=users(100)
    Priority=1197 Account=diamond QOS=normal
@@ -137,17 +136,18 @@ JobId=8387 Name=Ni2s+1hse06
 </code></pre>
 
 
-!SLIDE scale=128
+!SLIDE scale=1
 
 Konfiguráció
 
   *  **slurm.conf**
   *  slurmdbd.conf
-  *  topology.conf
-  *  gres.conf, cgroup.conf, ...
+  *  *topology.conf*
+  *  gres.conf (GPU)
+  *  cgroup.conf (SMP)
 
 
-!SLIDE scale=256
+!SLIDE scale=1
 
 slurm.conf
 
@@ -166,32 +166,32 @@ TopologyPlugin=topology/none
 SchedulerType=sched/backfill
 FastSchedule=1
 SelectType=select/cons_res
-SelectTypeParameters=CR_Core_Memory,CR_CORE_DEFAULT_DIST_BLOCK
+<span style="background: yellow;">SelectTypeParameters=CR_Core_Memory,CR_CORE_DEFAULT_DIST_BLOCK</span>
 TaskPlugin=task/affinity
 TaskPluginParam=sched
-PriorityType=priority/multifactor
+<span style="background: yellow;">PriorityType=priority/multifactor</span>
 JobAcctGatherType=jobacct_gather/linux
 AccountingStorageEnforce=limits
 AccountingStorageType=accounting_storage/slurmdbd
 AccountingStorageHost=10.8.0.1
 Licenses=maple*20
-NodeName=cn[01-32] Sockets=2 CoresPerSocket=12 ThreadsPerCore=1 RealMemory=60000 State=UNKNOWN
-PartitionName=batch Nodes=cn[01-32] Default=YES MaxMemPerNode=60000 DefaultTime=1-0 DisableRootJobs=YES State=UP
+<span style="background: yellow;">NodeName=cn[01-32] Sockets=2 CoresPerSocket=12 ThreadsPerCore=1 RealMemory=60000 State=UNKNOWN</span>
+<span style="background: yellow;">PartitionName=batch Nodes=cn[01-32] Default=YES MaxMemPerNode=60000 DefaultTime=1-0 DisableRootJobs=YES State=UP</span>
 </code></pre>
 
 
-!SLIDE scale=512
+!SLIDE scale=1
 
 Budapest-Szeged-Debrecen-Pécs
 
 <img src="multi_cluster.png" style="width: 95%; height: 95%;">
 
-!SLIDE scale=512
+!SLIDE scale=1
 
 NIIF HPC teszt Grid
 
 <pre><code>
-BUDAPEST[login] ~ (0)$ sinfo -M szeged
+<span style="background: yellow;">BUDAPEST[login] ~ (0)$ sinfo -M szeged</span>
 CLUSTER: szeged
 PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
 batch*       up   infinite     44   idle cn[01-22,25-44,46-47]
@@ -200,7 +200,7 @@ test         up    3:00:00      1   down cn48
 </code></pre>
 
 <pre><code>
-BUDAPEST[login] ~ (0)$ scontrol -M szeged show node cn48
+<span style="background: yellow;">BUDAPEST[login] ~ (0)$ scontrol -M szeged show node cn48</span>
 NodeName=cn48 Arch=x86_64 CoresPerSocket=12
    CPUAlloc=0 CPUErr=0 CPUTot=48 Features=(null)
    Gres=(null)
@@ -212,44 +212,48 @@ NodeName=cn48 Arch=x86_64 CoresPerSocket=12
 </code></pre>
 
 
-!SLIDE scale=1024
+!SLIDE scale=1
 
 Slurmdbd
 
 <img src="accounting.png" style="width: 95%; height: 95%;">
+<!--
+<img src="usage_pies.gif" style="width: 30%; height: 30%;">
+-->
 
-!SLIDE scale=1024
+!SLIDE scale=1
 
-SBANK
+Slurm Bank
 
 <pre><code>
-BUDAPEST[login] ~ (1)$ myaccount
+<span style="background: yellow;">BUDAPEST[login] ~ (0)$ myaccount Cluster=szeged,budapest</span>
    Account    Cluster  GrpCPUMins     MaxWall 
----------- ---------- ----------- ----------- 
-   gallium   budapest             14-00:00:00 
-  gaussian   budapest             14-00:00:00 
+---------- ---------- ----------- -----------  
+  priority     szeged             14-00:00:00 
   priority   budapest             14-00:00:00 
-      test   budapest             14-00:00:00
+      test     szeged             14-00:00:00 
+      test   budapest             14-00:00:00 
 </code></pre>
 
 <pre><code>
-BUDAPEST[login] ~ (0)$ mybalance
+<span style="background: yellow;">BUDAPEST[login] ~ (0)$ mybalance</span>
 User             Usage |          Account       Usage | Account Limit   Available (CPU hrs)
 ---------- ----------- + ---------------- ----------- + ------------- -----------
-htom                 0 |         priority           0 |       100,000     100,000
-htom               335 |             test         335 |        50,000      49,665
+***                  0 |         priority           0 |       100,000     100,000
+***                335 |             test         335 |        50,000      49,665
 </code></pre>
 
 
-!SLIDE scale=2048
+!SLIDE scale=1
 
- *  **Multi klaszter SMP/GPU/MIC** (topológia)
- *  **Backfill ütemezés** (QOS, cgroup, limitek)
+ *  **Multi klaszter SMP/GPU/MIC**, topológia
+ *  **Backfill ütemezés**, QOS, cgroup, limitek
  *  **SQL Accounting**, prioritások
  *  **Sbank**: egy ütemező mindenre
 
 
-!SLIDE scale=4096
+!SLIDE scale=1
 
-github.com/hornos
+**Egységes magyar HPC rendszert!**
+folytatás: szerda 11:10 D. terem
 
